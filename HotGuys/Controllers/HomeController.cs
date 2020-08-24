@@ -1,4 +1,5 @@
 ﻿using HotGuys.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,72 +7,81 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using HotGuys.Utils;
 
 namespace HotGuys.Controllers
 {
-    
     [RequireHttps]
     public class HomeController : Controller
     {
-        
-        private HotGuysModels db = new HotGuysModels();
-        
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Index()
         {
             return View();
-            
         }
-        // GET: Home/Details/2
+        // GET: Home/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HotChoiceViewModels hotChoiceViewModels = db.HotChoiceViewModels.Find(id);
-            if(Session["count"] == null)
-            {
-                Session["count"] = "0";
-            }
-            int count = Session["count"].ToString().Length;
-            Session["temp"] =count+"Name:"+hotChoiceViewModels.Name+ "   Price:" + hotChoiceViewModels.Price.ToString();
-            Session["front"] = "Details";
+            HotChoiceViewModels hotChoiceViewModels = db.HotChoiceViewModels.Include(h => h.User).FirstOrDefault(h => h.Id == id);
             if (hotChoiceViewModels == null)
             {
                 return HttpNotFound();
             }
+            var comments = db.Comments.Where(c => c.HotChoiceId == hotChoiceViewModels.Id).Include(c => c.User).ToList();
+            foreach (var comment in comments)
+            {
+                comment.User = db.ApplicationUsers.Where(u => u.Id == comment.UserId).First();
+            }
+            hotChoiceViewModels.Comments = comments;
+
+            // ViewData["Comments"] =  db.Comments.Where(c => c.HotChoiceId == hotChoiceViewModels.Id).ToList();
             return View(hotChoiceViewModels);
         }
         public ActionResult Store()
         {
-            Session["front"] = "Store";
-            return View(db.HotChoiceViewModels.Include(h=> h.User).ToList());
+            var hotchoices = db.HotChoiceViewModels.Include(h => h.User).ToList();
+            
+            foreach(var hotchoice in hotchoices)
+            {
+                hotchoice.Comments = db.Comments.Where(c => c.HotChoiceId == hotchoice.Id).Include(c=>c.User).ToList();
+                foreach(var comment in hotchoice.Comments)
+                {
+                    comment.User = db.ApplicationUsers.Where(u => u.Id == comment.UserId).First();
+                }
+ 
+            }
+            return View(hotchoices);
+            
         }
-        public ActionResult Cart()
-        {
-            if (Session["cart"] == null)
-            {
-                Session["cart"] = "";
-            }
-            if (Session["temp"] == null)
-            {
-                Session["temp"] = "";
-            }
-            if (Session["count"] == null)
-            {
-                Session["count"] = "0";
-            }
-            if(Session["front"].ToString() == "Details")
-            {
-                Session["cart"] += Session["temp"].ToString();
-                Session["count"] += "0";
-            }
-            ViewBag.Message = "Your shopping cart list:" + Session["cart"].ToString();
 
+        // GET: Home/AddComment/5
+        [HttpGet]
+        [Authorize]
+        public ActionResult AddComment(int? id)
+        {
+            ViewBag.HotchoiceId = id;
             return View();
         }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult AddComment([Bind(Include = "Id,Rating,Comment,HotChoiceId,UserId")] Comments comments)
+        {
+            if (ModelState.IsValid)
+            {
+                comments.UserId = User.Identity.GetUserId();
+                db.Comments.Add(comments);
+                db.SaveChanges();
+                return RedirectToAction("Details/"+ comments.HotChoiceId);
+            }
+
+            return View(comments);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Hot guys, find your favorite hot pot.";
@@ -82,38 +92,6 @@ namespace HotGuys.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Please contact us at support@hotguys.com";
-
-            return View();
-        }
-        public ActionResult Send_Email()
-        {
-            return View(new SendEmailViewModel());
-        }
-        [HttpPost]
-        public ActionResult Send_Email(SendEmailViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    String toEmail = model.ToEmail;
-                    String subject = model.Subject;
-                    String contents = model.Contents;
-
-                    EmailSender es = new EmailSender();
-                    es.Send(toEmail, subject, contents);
-
-                    ViewBag.Result = "Email has been send.";
-
-                    ModelState.Clear();
-
-                    return View(new SendEmailViewModel());
-                }
-                catch
-                {
-                    return View();
-                }
-            }
 
             return View();
         }

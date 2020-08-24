@@ -16,6 +16,8 @@ namespace HotGuys.Models
         //public string Bio { get; set; }
 
         public virtual ICollection<HotChoiceViewModels> HotChoices { get; set; }
+        public virtual ICollection<Comments> Comments { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -25,10 +27,10 @@ namespace HotGuys.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
 
@@ -36,5 +38,11 @@ namespace HotGuys.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<HotGuys.Models.Comments> Comments { get; set; }
+
+        public System.Data.Entity.DbSet<HotGuys.Models.HotChoiceViewModels> HotChoiceViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<HotGuys.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

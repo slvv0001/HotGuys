@@ -8,7 +8,7 @@ using System.Web;
 
 namespace HotGuys.Models
 {
-    public class HotGuysModels : IdentityDbContext<ApplicationUser>
+    public class HotGuysModels : IdentityDbContext
     {
         public HotGuysModels()
            
@@ -19,6 +19,10 @@ namespace HotGuys.Models
  
 
         public virtual DbSet<HotChoiceViewModels> HotChoiceViewModels { get; set; }
+        public virtual DbSet<Comments> Comments { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

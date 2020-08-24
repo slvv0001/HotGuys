@@ -44,16 +44,17 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Image)
+            Image
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Image)
+            <img src="@Url.Content(Model.Image)" height="250", width="250"/>
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Comment", "Comment", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+

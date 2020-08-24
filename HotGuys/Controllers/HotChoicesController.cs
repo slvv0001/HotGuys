@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -50,11 +51,18 @@ namespace HotGuys.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Price,UserId,Image")] HotChoiceViewModels hotChoiceViewModels)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Price,UserId,Image, ImageFile")] HotChoiceViewModels hotChoiceViewModels)
         {
             if (ModelState.IsValid)
             {
-                hotChoiceViewModels.UserId = User.Identity.GetUserId();           
+                hotChoiceViewModels.UserId = User.Identity.GetUserId();
+                string image = Path.GetFileNameWithoutExtension(hotChoiceViewModels.ImageFile.FileName);
+                string extension = Path.GetExtension(hotChoiceViewModels.ImageFile.FileName);
+                image = image + DateTime.Now.ToString("yy-mm-ss-fff") + extension;
+                hotChoiceViewModels.Image = "~/Resources/" + image;
+                image = Path.Combine(Server.MapPath("~/Resources/"), image);
+                hotChoiceViewModels.ImageFile.SaveAs(image);
+
                 db.HotChoiceViewModels.Add(hotChoiceViewModels);
                 db.SaveChanges();
                 return RedirectToAction("Index");

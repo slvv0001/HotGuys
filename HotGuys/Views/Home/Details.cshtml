@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h2>Details</h2>
 
 <div>
@@ -36,7 +37,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.UserName)
+            Merchant
         </dt>
 
         <dd>
@@ -44,16 +45,65 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Image)
+            Rating
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Image)
+            @if (Model.Comments.Count > 0)
+            {
+                @Model.Comments.Average(c => c.Rating)
+            }
+            else
+            {
+                <p>0</p>
+            }
+        </dd>
+        <dt>
+            Image
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.Image)" height="250" , width="250" />
         </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Add to Cart", "Cart") |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Store")
 </p>
+
+<div>
+    <h4>Comments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @foreach (var comment in Model.Comments.ToList())
+        {
+            <dt>User</dt>
+            <dd>
+                @comment.User.UserName
+            </dd>
+            <dt>
+                Rating
+            </dt>
+
+            <dd>
+                @comment.Rating
+            </dd>
+
+            <dt>
+                Comment
+            </dt>
+
+            <dd>
+                @comment.Comment
+            </dd>
+
+            <hr />
+
+        }
+    </dl>
+    <p>
+        @Html.ActionLink("Add Comment", "AddComment", new { id = Model.Id })
+    </p>
+</div>
 

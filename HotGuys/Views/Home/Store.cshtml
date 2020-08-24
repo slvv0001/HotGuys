@@ -22,10 +22,13 @@
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.UserName)
+            Merchant
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Image)
+            @Html.DisplayNameFor(model=> model.Image)
+        </th>
+        <th>
+            Rating
         </th>
         <th></th>
     </tr>
@@ -45,11 +48,21 @@
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Image)
+            <img src="@Url.Content(item.Image)" height="50" , width="50" />
         </td>
         <td>
-        
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
+            @if (item.Comments.Count > 0)
+            {
+                @item.Comments.Average(c => c.Rating)
+            }
+            else
+            { 
+                <p>0</p>
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Add to Cart", "AddToCart", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
         </td>
     </tr>
 }

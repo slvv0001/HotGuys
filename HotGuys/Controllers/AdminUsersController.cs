@@ -13,12 +13,12 @@ namespace HotGuys.Controllers
     [Authorize(Roles = "admin")]
     public class AdminUsersController : Controller
     {
-        private AdminModels db = new AdminModels();
+        private HotGuysModels db = new HotGuysModels();
 
         // GET: AdminUsers
         public ActionResult Index()
         {
-            return View(db.AspNetUsers.ToList());
+            return View(db.ApplicationUsers.ToList());
         }
 
         // GET: AdminUsers/Details/5
@@ -28,7 +28,7 @@ namespace HotGuys.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            ApplicationUser aspNetUser = db.ApplicationUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -47,16 +47,16 @@ namespace HotGuys.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
+        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.AspNetUsers.Add(aspNetUser);
+                db.ApplicationUsers.Add(applicationUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(aspNetUser);
+            return View(applicationUser);
         }
 
         // GET: AdminUsers/Edit/5
@@ -66,7 +66,7 @@ namespace HotGuys.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            ApplicationUser aspNetUser = db.ApplicationUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -79,7 +79,7 @@ namespace HotGuys.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
+        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace HotGuys.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            ApplicationUser aspNetUser = db.ApplicationUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace HotGuys.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            db.AspNetUsers.Remove(aspNetUser);
+            ApplicationUser aspNetUser = db.ApplicationUsers.Find(id);
+            db.ApplicationUsers.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

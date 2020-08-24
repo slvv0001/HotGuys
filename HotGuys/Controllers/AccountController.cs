@@ -75,16 +75,53 @@ namespace HotGuys.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //AuthenticationManager.AuthenticationResponseGrant = null;
 
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
+                
                 case SignInStatus.Success:
+                    var user = new ClaimsPrincipal(AuthenticationManager.AuthenticationResponseGrant.Identity);
+
+                    if (returnUrl == null)
+                    {
+
+                        if (user.IsInRole("admin"))
+                        {
+                            returnUrl = "/adminusers";
+                        }
+                        else if (user.IsInRole("merchant"))
+                        {
+                            returnUrl = "/hotchoices";
+                        }
+                        else if (user.IsInRole("user"))
+                        {
+                            returnUrl = "home/store";
+                        }
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
+                    user = new ClaimsPrincipal(AuthenticationManager.AuthenticationResponseGrant.Identity);
+
+                    if (returnUrl == null)
+                    {
+
+                        if (user.IsInRole("admin"))
+                        {
+                            returnUrl = "/adminusers";
+                        }
+                        else if (user.IsInRole("merchant"))
+                        {
+                            returnUrl = "/hotchoices";
+                        }
+                        else if (user.IsInRole("user"))
+                        {
+                            returnUrl = "home/store";
+                        }
+                    }
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:

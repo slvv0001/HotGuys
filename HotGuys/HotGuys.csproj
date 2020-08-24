@@ -46,12 +46,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="SendGrid, Version=9.21.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
-      <HintPath>..\packages\SendGrid.9.21.0\lib\net452\SendGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="StarkbankEcdsa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\starkbank-ecdsa.1.2.0\lib\net452\StarkbankEcdsa.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -187,18 +181,19 @@
     <Compile Include="Migrations\202008221438143_deleteBio.Designer.cs">
       <DependentUpon>202008221438143_deleteBio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008240952028_user.cs" />
+    <Compile Include="Migrations\202008240952028_user.Designer.cs">
+      <DependentUpon>202008240952028_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminModels.cs" />
-    <Compile Include="Models\AspNetUser.cs" />
+    <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\HotChoiceViewModels.cs" />
     <Compile Include="Models\HotGuysModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\SendEmailViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Utils\EmailSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\aspnet-HotGuys-20200810033100.mdf" />
@@ -273,8 +268,7 @@
     <Content Include="Views\AdminUsers\Edit.cshtml" />
     <Content Include="Views\AdminUsers\Index.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
-    <Content Include="Views\Home\Cart.cshtml" />
-    <Content Include="Views\Home\Send_Email.cshtml" />
+    <Content Include="Views\Home\AddComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -296,6 +290,12 @@
     <EmbeddedResource Include="Migrations\202008221438143_deleteBio.resx">
       <DependentUpon>202008221438143_deleteBio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008240952028_user.resx">
+      <DependentUpon>202008240952028_user.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
