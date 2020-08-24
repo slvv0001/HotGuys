@@ -72,15 +72,18 @@ namespace HotGuys.Controllers
 
             return View();
         }
+
+        // GET: /Home/Store
         public ActionResult Store()
         {
             var hotchoices = db.HotChoiceViewModels.Include(h => h.User).ToList();
-            
+            // retrieve comments for each hotchoice
             foreach(var hotchoice in hotchoices)
             {
                 hotchoice.Comments = db.Comments.Where(c => c.HotChoiceId == hotchoice.Id).Include(c=>c.User).ToList();
                 foreach(var comment in hotchoice.Comments)
                 {
+                    // retrieve user for a specific comment
                     comment.User = db.ApplicationUsers.Where(u => u.Id == comment.UserId).First();
                 }
  
@@ -95,6 +98,7 @@ namespace HotGuys.Controllers
         [Authorize]
         public ActionResult AddComment(int? id)
         {
+            // HotChoiceId should be passed to the function
             ViewBag.HotchoiceId = id;
             return View();
         }
@@ -105,9 +109,12 @@ namespace HotGuys.Controllers
         {
             if (ModelState.IsValid)
             {
+                // get comment userid
                 comments.UserId = User.Identity.GetUserId();
+                // save comment
                 db.Comments.Add(comments);
                 db.SaveChanges();
+                // back to detail page
                 return RedirectToAction("Details/"+ comments.HotChoiceId);
             }
 

@@ -86,6 +86,7 @@ namespace HotGuys.Controllers
 
                     if (returnUrl == null)
                     {
+                        // change redirection location according to user role
 
                         if (user.IsInRole("admin"))
                         {
@@ -194,7 +195,7 @@ namespace HotGuys.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
+                    // bind role to the new user
                     await UserManager.AddToRoleAsync(user.Id, model.Role);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

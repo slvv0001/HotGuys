@@ -193,11 +193,32 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>RBA.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>RBA.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\HotChoiceViewModels.cs" />
     <Compile Include="Models\HotGuysModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RBA.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RBA.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RBA.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RBA.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RBA.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RBA.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\SendEmailViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -217,8 +238,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\RBA.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RBA.edmx</DependentUpon>
+      <LastGenOutput>RBA.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RBA.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RBA.edmx</DependentUpon>
+      <LastGenOutput>RBA.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\RBA.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RBA.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\RBA.edmx.diagram">
+      <DependentUpon>RBA.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

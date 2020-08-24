@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace HotGuys.Controllers
 {
+    // Only merchants are allowed to access HotChoices
     [Authorize(Roles ="merchant")]
     public class HotChoicesController : Controller
     {
@@ -55,6 +56,7 @@ namespace HotGuys.Controllers
         {
             if (ModelState.IsValid)
             {
+                // get uploaded image and save it
                 hotChoiceViewModels.UserId = User.Identity.GetUserId();
                 string image = Path.GetFileNameWithoutExtension(hotChoiceViewModels.ImageFile.FileName);
                 string extension = Path.GetExtension(hotChoiceViewModels.ImageFile.FileName);
