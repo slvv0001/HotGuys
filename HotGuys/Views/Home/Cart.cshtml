@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "User Cart";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<script>
+    function myFunction() {
+         var isFull = "@Session["cart"].ToString()";
+    if (isFull != "") {
+        alert("You have ordered successfully!");
+    }
+    else {
+        alert("You haven't ordered yet!");
+    }
+    }
+
+</script>
+<input type="button" onclick="myFunction()" value="submit">
