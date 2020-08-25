@@ -26,7 +26,7 @@ namespace HotGuys.Models
             return userIdentity;
         }
     }
-
+    // @author Feng Li
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext()

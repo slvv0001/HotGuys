@@ -10,6 +10,7 @@ using HotGuys.Models;
 
 namespace HotGuys.Controllers
 {
+    // @author Feng Li
     [Authorize(Roles = "admin")]
     public class AdminUsersController : Controller
     {

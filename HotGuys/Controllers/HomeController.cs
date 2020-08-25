@@ -21,7 +21,7 @@ namespace HotGuys.Controllers
             return View();
         }
 
-        // @author Lu Chen & Shuang Lv
+        // @author Lu Chen & Shuang Lv & Feng Li
         // GET: Home/Details/5
         public ActionResult Details(int? id)
         {
