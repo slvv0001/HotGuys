@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace HotGuys.Controllers
 {
+    // @author Lu Chen 
     // Only merchants are allowed to access HotChoices
     [Authorize(Roles ="merchant")]
     public class HotChoicesController : Controller

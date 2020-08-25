@@ -12,9 +12,9 @@ namespace HotGuys.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        
-        //public string Bio { get; set; }
 
+        // @author Lu Chen
+        // mapping to hotChoices and Comments
         public virtual ICollection<HotChoiceViewModels> HotChoices { get; set; }
         public virtual ICollection<Comments> Comments { get; set; }
 
@@ -38,7 +38,8 @@ namespace HotGuys.Models
         {
             return new ApplicationDbContext();
         }
-
+        // @author Lu Chen
+        // Add Comments, HotChoices and ApplicationUser model to dbContext
         public System.Data.Entity.DbSet<HotGuys.Models.Comments> Comments { get; set; }
 
         public System.Data.Entity.DbSet<HotGuys.Models.HotChoiceViewModels> HotChoiceViewModels { get; set; }

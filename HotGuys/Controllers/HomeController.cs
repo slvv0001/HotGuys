@@ -20,6 +20,8 @@ namespace HotGuys.Controllers
         {
             return View();
         }
+
+        // @author Lu Chen
         // GET: Home/Details/5
         public ActionResult Details(int? id)
         {
@@ -73,6 +75,7 @@ namespace HotGuys.Controllers
             return View();
         }
 
+        // @author Lu Chen 
         // GET: /Home/Store
         public ActionResult Store()
         {
@@ -92,7 +95,7 @@ namespace HotGuys.Controllers
             return View(hotchoices);
             
         }
-
+        // @author Lu Chen
         // GET: Home/AddComment/5
         [HttpGet]
         [Authorize]
@@ -103,6 +106,7 @@ namespace HotGuys.Controllers
             return View();
         }
 
+        // @author Lu Chen
         [HttpPost]
         [Authorize]
         public ActionResult AddComment([Bind(Include = "Id,Rating,Comment,HotChoiceId,UserId")] Comments comments)

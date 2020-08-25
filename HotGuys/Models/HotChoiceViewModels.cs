@@ -7,6 +7,7 @@ using System.Web;
 
 namespace HotGuys.Models
 {
+    // @author Lu Chen
     public class HotChoiceViewModels
     {
         public int Id { get; set; }
@@ -27,6 +28,8 @@ namespace HotGuys.Models
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Comments> Comments { get; set; }
+
+        // Uploading Image
         [NotMapped]
         public HttpPostedFileBase ImageFile { get; set; }
     }
