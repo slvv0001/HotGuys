@@ -105,6 +105,7 @@ namespace HotGuys.Controllers
             return View(hotChoiceViewModels);
         }
 
+        //@author Shuang Lv
         // GET: HotChoices/Delete/5
         public ActionResult Delete(int? id)
         {

@@ -21,7 +21,7 @@ namespace HotGuys.Controllers
             return View();
         }
 
-        // @author Lu Chen
+        // @author Lu Chen & Shuang Lv
         // GET: Home/Details/5
         public ActionResult Details(int? id)
         {
@@ -51,6 +51,8 @@ namespace HotGuys.Controllers
             // ViewData["Comments"] =  db.Comments.Where(c => c.HotChoiceId == hotChoiceViewModels.Id).ToList();
             return View(hotChoiceViewModels);
         }
+        //@author Shuang Lv
+        // GET: Home/Cart
         public ActionResult Cart()
         {
             if (Session["cart"] == null)
@@ -138,11 +140,14 @@ namespace HotGuys.Controllers
 
             return View();
         }
+        //@author Shuang Lv
+        // GET: Home/Send_Email
         public ActionResult Send_Email()
         {
             return View(new SendEmailViewModel());
         }
         [HttpPost]
+        //@author Shuang Lv
         public ActionResult Send_Email(SendEmailViewModel model)
         {
             if (ModelState.IsValid)

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+//@author Shuang Lv
 namespace HotGuys.Models
 {
     public class SendEmailViewModel

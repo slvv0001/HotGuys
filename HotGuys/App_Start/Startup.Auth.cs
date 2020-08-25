@@ -58,6 +58,7 @@ namespace HotGuys
             //   appId: "",
             //   appSecret: "");
 
+            //@author Shuang Lv
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "901948551519-b4a31u5dapnaf9t2tds18i9dv9oo6mma.apps.googleusercontent.com",
